@@ -1,0 +1,30 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:roommate_marketplace_test;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    open-in-view: false
+    show-sql: false
+  mail:
+    host: localhost
+    port: 1025
+
+jwt:
+  secret: test-jwt-secret-for-auth-tests-123456
+  access-token-expiration-ms: 900000
+  refresh-token-expiration-ms: 604800000
+
+app:
+  base-url: http://localhost:8080
+
+email:
+  verification:
+    token-minutes: 30
+  from: test-no-reply@roommatemarketplace.local
+
+rate-limit:
+  enabled: false

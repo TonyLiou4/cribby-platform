@@ -1,0 +1,11 @@
+.DS_Store
+**/.DS_Store
+**/node_modules/
+**/.sites-runtime/
+**/.next/
+**/dist/
+**/*.tsbuildinfo
+**/.wrangler/
+**/.env
+**/.env.local
+tmp/
