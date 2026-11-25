@@ -130,6 +130,7 @@ export default function HomePage() {
   const [connected, setConnected] = useState<string[]>([]);
   const [search, setSearch] = useState("");
   const [maxRent, setMaxRent] = useState(2400);
+  const [timeCopy, setTimeCopy] = useState({ greeting: "Welcome back", dateLabel: "Today" });
 
   const nav: readonly NavItem[] = role === "student" ? studentNav : managerNav;
   const filteredListings = useMemo(() => listings.filter((home) => {
@@ -137,10 +138,7 @@ export default function HomePage() {
     return matchesSearch && home.rent <= maxRent;
   }), [maxRent, search]);
 
-  const now = new Date();
-  const currentHour = now.getHours();
-  const greeting = currentHour < 12 ? "Good morning" : currentHour < 18 ? "Good afternoon" : "Good evening";
-  const dateLabel = now.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
+  const { greeting, dateLabel } = timeCopy;
 
   function changeRole(nextRole: Role) {
     setRole(nextRole);
@@ -157,6 +155,18 @@ export default function HomePage() {
     setConnected((current) => current.includes(name) ? current : [...current, name]);
     toast.success(`Connection request sent to ${name}`);
   }
+
+  useEffect(() => {
+    const updateTimeCopy = window.setTimeout(() => {
+      const now = new Date();
+      const currentHour = now.getHours();
+      setTimeCopy({
+        greeting: currentHour < 12 ? "Good morning" : currentHour < 18 ? "Good afternoon" : "Good evening",
+        dateLabel: now.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" }),
+      });
+    }, 0);
+    return () => window.clearTimeout(updateTimeCopy);
+  }, []);
 
   useEffect(() => {
     const context = (document as Document & { modelContext?: ModelContext }).modelContext;
